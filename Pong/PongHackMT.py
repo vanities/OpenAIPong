@@ -31,7 +31,6 @@ clock = pygame.time.Clock()
 ball_img = pygame.image.load('ball.png')
 paddle1_img = pygame.image.load('paddle.png')
 paddle2_img = pygame.image.load('paddle.png')
-ball_img = pygame.image.load('ball.png')
 
 gameDisplay = pygame.display.set_mode((window_width,window_height))
 
