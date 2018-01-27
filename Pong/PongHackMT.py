@@ -79,8 +79,7 @@ while not gameExit:
                             y2_change = 0
         #END Paddle Movement
 
-                            
-
+        
         #Ball Movement
         y1 += y1_change
         y2 += y2_change
@@ -108,7 +107,8 @@ while not gameExit:
 
 
         #Ball Vertical Limit
-
+        if y <= 0 or y >= window_height:
+                   ball_yspeed = -1 * ball_yspeed
         #END Ball Vertical Limit
 
 
