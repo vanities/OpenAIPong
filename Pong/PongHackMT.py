@@ -57,8 +57,8 @@ cpuScore = 0
 
 myFont = pygame.font.SysFont("none", 20)
 
-randNumLabel = myFont.render(str(cpuScore), 1, white)
-diceDisplay = myFont.render(str(playerScore), 1, white)
+cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
+playerScoreDisplay = myFont.render(str(playerScore), 1, white)
 #gameloop
 myarray = list()
 
@@ -161,11 +161,14 @@ while not gameExit:
 
 
         #Update and Display Score
-        gameDisplay.blit(randNumLabel, (1, 5))
-        gameDisplay.blit(diceDisplay, (45, 5))
+        
+        cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
+        playerScoreDisplay = myFont.render(str(playerScore), 1, white)
+        gameDisplay.blit(cpuScoreDisplay, (window_width*3/4, ScoreBarHeight/2 - 10))
+        gameDisplay.blit(playerScoreDisplay, (window_width/4, ScoreBarHeight/2 - 10))
         #END Update and Display Score
 
         #SOMEONE PLEASE CHECK THE FOLLWOING LINE FOR MEMORY LEAK
         myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
 
-        clock.tick(15)
+        clock.tick(30)
