@@ -160,7 +160,7 @@ while not gameExit:
         #END Ball Vertical Limit
 
 
-        #Update and Display Score
+        #Update and Display Score 
         
         cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
         playerScoreDisplay = myFont.render(str(playerScore), 1, white)
