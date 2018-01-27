@@ -47,7 +47,7 @@ y1_change = 0
 y2_change = 0
 paddle_speed = 1
 ball_x = 0.5 * window_width
-ball_y = 0.5 * window_height
+ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
 ball_yspeed = random.randint(-3,3)
 #gameloop
