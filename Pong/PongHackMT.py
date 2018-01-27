@@ -63,7 +63,7 @@ myFont = pygame.font.SysFont("Courier New", 20, bold=True)
 myarray = list()
 
 def angleCalc(paddle_y, ball_y):
-        y = 5 * ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / paddleC_h*0.5 )
+        y =  5* ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / paddleC_h*.5 )
         return y
 
 
@@ -102,9 +102,9 @@ while not gameExit:
         
 
         # bounding box for the paddles
-        if paddleP_y + (paddleP_change+paddleP_h) >= window_height or paddleP_y + (paddleP_change) <= ScoreBarHeight:
+        if paddleP_y + (paddleP_change+paddleP_h) >= window_height+paddle_speed or paddleP_y + (paddleP_change) <= ScoreBarHeight:
                 paddleP_change = 0
-        if paddleC_y + (paddleC_change+paddleC_h) >= window_height or paddleC_y + (paddleC_change) <= ScoreBarHeight:
+        if paddleC_y + (paddleC_change+paddleC_h) >= window_height+paddle_speed or paddleC_y + (paddleC_change) <= ScoreBarHeight:
                 paddleC_change = 0
         #END Paddle Movement
 
@@ -138,7 +138,7 @@ while not gameExit:
                     ball_x -= 1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleC_y, ball_y)
-                    ball_yspeed = ball_xspeed * math.sin(angle) *-1
+                    ball_yspeed = ball_xspeed * math.sin(angle) *-2
                     cpuTreat = 1
                     
         #END Ball/Paddle Collision
@@ -170,11 +170,11 @@ while not gameExit:
 
 
         #Ball Vertical Limit
-        if ball_y + ball_yspeed <= ScoreBarHeight - 1:
+        if ball_y  + ball_yspeed <= ScoreBarHeight - 1:
                 ball_y += (ScoreBarHeight-ball_y)-ball_yspeed
                 ball_yspeed = -1* ball_yspeed
-        elif ball_y + ball_yspeed >= window_height:
-                ball_y += (window_height-ball_y)-ball_yspeed
+        elif ball_y + (ball_h-1) +ball_yspeed >= window_height:
+                ball_y += (window_height-(ball_y+ball_h-1))-ball_yspeed
                 ball_yspeed = -1* ball_yspeed
         else:
                 ball_y += ball_yspeed
