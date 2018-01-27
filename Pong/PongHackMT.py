@@ -20,9 +20,9 @@ pygame.display.set_caption("PongHackMT")
 
 ball_height = 1
 ball_width = 1
-paddleP_h = 10
+paddleP_h = 15
 paddleP_w = 1
-paddleC_h = 10
+paddleC_h = 15
 paddleC_w = 1
 
 black = (0, 0, 0)
@@ -32,7 +32,6 @@ clock = pygame.time.Clock()
 ball_img = pygame.image.load('ball.png')
 paddle1_img = pygame.image.load('paddle.png')
 paddle2_img = pygame.image.load('paddle.png')
-ball_img = pygame.image.load('ball.png')
 
 gameDisplay = pygame.display.set_mode((window_width, window_height), HWSURFACE|DOUBLEBUF|RESIZABLE)
 
@@ -53,6 +52,14 @@ ball_x = 0.5 * window_width
 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
 ball_yspeed = random.randint(-3,3)
+#score text
+playerScore = 0
+cpuScore = 0
+
+myFont = pygame.font.SysFont("Times New Roman", 20)
+
+cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
+playerScoreDisplay = myFont.render(str(playerScore), 1, white)
 #gameloop
 myarray = list()
 
@@ -87,9 +94,9 @@ while not gameExit:
         if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w or event.key == pygame.K_s:
                             paddleC_change = 0
-        if paddleP_y + (paddleP_change+9) >= window_height or paddleP_y + (paddleP_change-9) <= ScoreBarHeight:
+        if paddleP_y + (paddleP_change+paddleP_h) >= window_height or paddleP_y + (paddleP_change) <= ScoreBarHeight:
                 paddleP_change = 0
-        if paddleC_y + (paddleC_change+9) >= window_height or paddleC_y + (paddleC_change-9) <= ScoreBarHeight:
+        if paddleC_y + (paddleC_change+paddleC_h) >= window_height or paddleC_y + (paddleC_change) <= ScoreBarHeight:
                 paddleC_change = 0
         #END Paddle Movement
 
@@ -127,6 +134,10 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
+<<<<<<< HEAD
+=======
+                cpuScore += 1
+>>>>>>> 326730f06f1016c4cdfb3cd9b4233b34cd2b5dfa
 
         #If CPU Loses
         if (ball_x>window_width):
@@ -134,13 +145,14 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = -1
                 ball_yspeed = random.randint(-3,3)
+                playerScore += 1
 
         #END Ball Out of Bounds
 
 
 
         #Ball Vertical Limit
-        if ball_y + ball_yspeed <= ScoreBarHeight:
+        if ball_y + ball_yspeed <= ScoreBarHeight - 1:
                 ball_y += (ScoreBarHeight-ball_y)-ball_yspeed
                 ball_yspeed = -1* ball_yspeed
         elif ball_y + ball_yspeed >= window_height:
@@ -153,8 +165,17 @@ while not gameExit:
 
 
         #Update and Display Score
-
+        cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
+        playerScoreDisplay = myFont.render(str(playerScore), 1, white)
+        gameDisplay.blit(cpuScoreDisplay, (window_width*3/4, ScoreBarHeight/2 - 10))
+        gameDisplay.blit(playerScoreDisplay, (window_width/4, ScoreBarHeight/2 - 10))
         #END Update and Display Score
+<<<<<<< HEAD
 
+=======
+>>>>>>> 326730f06f1016c4cdfb3cd9b4233b34cd2b5dfa
 
-        clock.tick(15)
+        #SOMEONE PLEASE CHECK THE FOLLWOING LINE FOR MEMORY LEAK
+        myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
+
+        clock.tick(30)
