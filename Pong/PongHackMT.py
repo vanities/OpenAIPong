@@ -52,13 +52,13 @@ ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
 ball_yspeed = random.randint(-3,3)
 #score text
-playerScoure = 0
-cpuScoure = 0
+playerScore = 0
+cpuScore = 0
 
 myFont = pygame.font.SysFont("Times New Roman", 20)
 
-randNumLabel = myFont.render(str(cpuScoure), 1, white)
-diceDisplay = myFont.render(str(playerScoure), 1, white)
+cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
+playerScoreDisplay = myFont.render(str(playerScore), 1, white)
 #gameloop
 myarray = list()
 
@@ -133,8 +133,7 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
-                cpuScoure += 1
-                pygame.display.update()
+                cpuScore += 1
 
         #If CPU Loses
         if (ball_x>window_width):
@@ -142,15 +141,14 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = -1
                 ball_yspeed = random.randint(-3,3)
-                playerScoure += 1
-                pygame.display.update()
+                playerScore += 1
 
         #END Ball Out of Bounds
 
 
 
         #Ball Vertical Limit
-        if ball_y + ball_yspeed <= ScoreBarHeight:
+        if ball_y + ball_yspeed <= ScoreBarHeight - 1:
                 ball_y += (ScoreBarHeight-ball_y)-ball_yspeed
                 ball_yspeed = -1* ball_yspeed
         elif ball_y + ball_yspeed >= window_height:
@@ -163,9 +161,13 @@ while not gameExit:
 
 
         #Update and Display Score
-        gameDisplay.blit(randNumLabel, (25, 5))
-        gameDisplay.blit(diceDisplay, (120, 5))
+        cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
+        playerScoreDisplay = myFont.render(str(playerScore), 1, white)
+        gameDisplay.blit(cpuScoreDisplay, (window_width*3/4, ScoreBarHeight/2 - 10))
+        gameDisplay.blit(playerScoreDisplay, (window_width/4, ScoreBarHeight/2 - 10))
         #END Update and Display Score
 
+        #SOMEONE PLEASE CHECK THE FOLLWOING LINE FOR MEMORY LEAK
+        myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
 
-        clock.tick(15)
+        clock.tick(30)
