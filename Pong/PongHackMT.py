@@ -60,24 +60,26 @@ while not gameExit:
                 pygame.quit()
                 sys.exit()
 
-            #Paddle Movement    
-            if event.type == pygame.KEYDOWN:
+        #Paddle Movement    
+        if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                             y1_change = - (paddle_speed)
                     if event.key == pygame.K_DOWN:
                             y1_change = (paddle_speed)
-            if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
                             y2_change = - (paddle_speed)
                     if event.key == pygame.K_s:
                             y2_change = (paddle_speed)
-            if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             y1_change = 0
-            if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w or event.key == pygame.K_s:
                             y2_change = 0
-            #END Paddle Movement
+        #END Paddle Movement
+
+                            
 
         #Ball Movement
         y1 += y1_change
