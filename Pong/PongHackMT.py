@@ -19,9 +19,9 @@ pygame.display.set_caption("PongHackMT")
 
 ball_height = 1
 ball_width = 1
-paddleP_h = 11
+paddleP_h = 10
 paddleP_w = 1
-paddleC_h = 11
+paddleC_h = 10
 paddleC_w = 1
 
 black = (0, 0, 0)
@@ -47,11 +47,11 @@ paddleP_y = (0.5*(window_height-ScoreBarHeight))+ScoreBarHeight
 paddleC_y = paddleP_y
 paddleP_change = 0
 paddleC_change = 0
-paddle_speed = 1
+paddle_speed = 2
 ball_x = 0.5 * window_width
 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
-ball_yspeed = 0#random.randint(-3,3)
+ball_yspeed = random.randint(-3,3)
 #gameloop
 
 gameExit = False
@@ -60,8 +60,9 @@ while not gameExit:
         scoresLine = pygame.draw.rect(gameDisplay, white, (0, 29, 160, 2), 0)
         pygame.display.update()
 
-        #while ball_yspeed == 0:
-                #ball_yspeed = random.randint(-3,3)
+        while ball_yspeed == 0:
+                ball_yspeed = random.randint(-3,3)
+                
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -105,11 +106,11 @@ while not gameExit:
 
         #Ball/Paddle Collision
         if ball_x == paddleP_x:
-            if ball_y >= (paddleP_y - (paddleP_h - 1)/2) and ball_y <= (paddleP_y + (paddleP_h - 1)/2):
+            if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):
                     ball_x += 1
                     ball_xspeed *= -1
         if ball_x == paddleC_x:
-            if ball_y >= (paddleC_y - (paddleC_h - 1)/2) and ball_y <= (paddleC_y + (paddleC_h - 1)/2):
+            if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleP_h):
                     ball_x -= 1
                     ball_xspeed *= -1
         #END Ball/Paddle Collision
