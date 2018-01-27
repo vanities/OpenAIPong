@@ -127,7 +127,7 @@ while True:
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
-                ball_yspeed = random.randint(-3,3)
+                ball_yspeed = random.randint(-3, 3)
                 cpuScore += 1
 
         #If CPU Loses
@@ -135,7 +135,7 @@ while True:
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = -1
-                ball_yspeed = random.randint(-3,3)
+                ball_yspeed = random.randint(-3, 3)
                 playerScore += 1
 
         #END Ball Out of Bounds
