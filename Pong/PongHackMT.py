@@ -10,7 +10,8 @@ window_width = 160
 window_height = 210
 ScoreBarHeight = 30
 
-white = (255, 255, 255)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 
 # set up display size
 windowDisplay = pygame.display.set_mode((window_width,window_height), HWSURFACE | DOUBLEBUF | RESIZABLE)
@@ -24,8 +25,6 @@ paddleP_h = 15
 paddleP_w = 1
 paddleC_h = 15
 paddleC_w = 1
-
-BLACK = (0, 0, 0)
 
 clock = pygame.time.Clock()
 
@@ -58,8 +57,8 @@ cpuScore = 0
 
 myFont = pygame.font.SysFont("Times New Roman", 20)
 
-cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
-playerScoreDisplay = myFont.render(str(playerScore), 1, white)\
+cpuScoreDisplay = myFont.render(str(cpuScore), 1, WHITE)
+playerScoreDisplay = myFont.render(str(playerScore), 1, WHITE)\
 #gameloop
 myarray = list()
 data = pygame.surfarray.array3d(gameDisplay)
@@ -67,7 +66,7 @@ data = pygame.surfarray.array3d(gameDisplay)
 gameExit = False
 while not gameExit:
 
-        scoresLine = pygame.draw.rect(gameDisplay, white, (0, 29, 160, 2), 0)
+        scoresLine = pygame.draw.rect(gameDisplay, WHITE, (0, 29, 160, 2), 0)
         pygame.display.update()
 
         while ball_yspeed == 0:
@@ -156,8 +155,8 @@ while not gameExit:
         #END Ball Vertical Limit
 
         #Update and Display Score
-        cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
-        playerScoreDisplay = myFont.render(str(playerScore), 1, white)
+        cpuScoreDisplay = myFont.render(str(cpuScore), 1, WHITE)
+        playerScoreDisplay = myFont.render(str(playerScore), 1, WHITE)
         gameDisplay.blit(cpuScoreDisplay, (window_width*3/4, ScoreBarHeight/2 - 10))
         gameDisplay.blit(playerScoreDisplay, (window_width/4, ScoreBarHeight/2 - 10))
         #END Update and Display Score
