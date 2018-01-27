@@ -11,7 +11,6 @@ window_height = 210
 
 # set up display size
 windowDisplay = pygame.display.set_mode((window_width,window_height))
-
 #Title
 pygame.display.set_caption("PongHackMT")
 
