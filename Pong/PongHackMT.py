@@ -17,12 +17,12 @@ windowDisplay = pygame.display.set_mode((window_width,window_height))
 #Title
 pygame.display.set_caption("PongHackMT")
 
-ball_height = 1
-ball_width = 1
+ball_h = 3
+ball_w = 3
 paddleP_h = 15
-paddleP_w = 1
+paddleP_w = 3
 paddleC_h = 15
-paddleC_w = 1
+paddleC_w = 3
 
 black = (0, 0, 0)
 
@@ -59,8 +59,6 @@ cpuTreat = 0
 
 myFont = pygame.font.SysFont("Times New Roman", 20)
 
-#cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
-#playerScoreDisplay = myFont.render(str(playerScore), 1, white)
 #gameloop
 myarray = list()
 
@@ -123,11 +121,11 @@ while not gameExit:
 
 
         #Ball/Paddle Collision
-        #if ball_x - ball_xspeed <= paddleP_x - paddleP_w + 1 and
+        if ball_x + ball_xspeed <= paddleP_x + paddleP_w and ball_x + ball_w - 1 + ball_xspeed >= paddleP_x:
 
         # ball Collision
-        if ball_x == paddleP_x:
-            if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):       #Player paddle
+        #if ball_x == paddleP_x:
+        #    if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):       #Player paddle
                     ball_x += 1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleP_y, ball_y)
