@@ -121,8 +121,8 @@ while not gameExit:
 
 
         #Ball/Paddle Collision
-        if ball_x + ball_xspeed <= paddleP_x + paddleP_w and ball_x + ball_w - 1 + ball_xspeed >= paddleP_x:
-
+        if ball_x + ball_xspeed <= paddleP_x + paddleP_w - 1 and ball_x + ball_w - 1 + ball_xspeed >= paddleP_x:
+                if ball_y + ball_yspeed <= paddleP_y + paddleP_h - 1 and ball_y + ball_h - 1 + ball_yspeed >= paddleP_y:
         # ball Collision
         #if ball_x == paddleP_x:
         #    if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):       #Player paddle
@@ -131,8 +131,10 @@ while not gameExit:
                     angle = angleCalc(paddleP_y, ball_y)
                     ball_yspeed = ball_xspeed * math.sin(angle)
                     cpuTreat = 1
-        if ball_x == paddleC_x:
-            if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleC_h):     #CPU paddle
+        #if ball_x == paddleC_x:
+        #    if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleC_h):     #CPU paddle
+        if ball_x + ball_xspeed <= paddleC_x + paddleC_w - 1 and ball_x + ball_w - 1 + ball_xspeed >= paddleC_x:
+                if ball_y + ball_yspeed <= paddleC_y + paddleC_h - 1 and ball_y + ball_h - 1 + ball_yspeed >= paddleC_y:
                     ball_x -= 1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleC_y, ball_y)
