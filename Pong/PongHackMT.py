@@ -6,8 +6,8 @@ from pygame.locals import *
 #initialise the pygame module
 pygame.init()
 
-window_width = 160
-window_height = 210
+window_width = 500
+window_height = 620
 ScoreBarHeight = 30
 
 white = (255, 255, 255)
@@ -87,13 +87,13 @@ while not gameExit:
         #Paddle Movement
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                            paddleP_change = - (paddle_speed)
+                            paddleP_change += - (paddle_speed)
                     elif event.key == pygame.K_DOWN:
-                            paddleP_change = (paddle_speed)
+                            paddleP_change += (paddle_speed)
                     if event.key == pygame.K_w:
-                            paddleC_change = - (paddle_speed)
+                            paddleC_change += - (paddle_speed)
                     elif event.key == pygame.K_s:
-                            paddleC_change = (paddle_speed)
+                            paddleC_change += (paddle_speed)
         elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             paddleP_change = 0
