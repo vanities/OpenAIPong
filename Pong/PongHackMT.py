@@ -52,7 +52,7 @@ paddle_speed = window_height/105
 ball_x = 0.5 * window_width
 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = window_width/160
-ball_yspeed = random.randint(-1,1)*window_height/210
+ball_yspeed = random.uniform(-3,3)*window_height/210
 
 #Score Vars
 playerScore = 0
@@ -78,7 +78,7 @@ while not gameExit:
 
 
         while ball_yspeed == 0:
-                ball_yspeed = random.randint(-3,3)
+                ball_yspeed = random.uniform(-3,3)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -151,7 +151,7 @@ while not gameExit:
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 #ball_xspeed *= 
-                ball_yspeed = random.randint(-3,3)
+                ball_yspeed = random.uniform(-3,3)
                 cpuScore += 1
                 playerTreat = -2
 
@@ -160,11 +160,11 @@ while not gameExit:
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 #ball_xspeed = -1
-                ball_yspeed = random.randint(-3,3)
+                ball_yspeed = random.uniform(-3,3)
                 playerScore += 1
                 cpuTreat = -2
         #When Score reaches 20
-        if playerScore == 20 or cpuScore == 20:
+        if playerScore == 999 or cpuScore == 999:
                 pygame.quit()
                 sys.exit()
         #END Ball Out of Bounds
