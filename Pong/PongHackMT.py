@@ -45,7 +45,7 @@ y1 = 0.5 * window_height
 y2 = y1
 y1_change = 0
 y2_change = 0
-paddle_speed = 3
+paddle_speed = 1
 ball_x = 0.5 * window_width
 ball_y = 0.5 * window_height
 ball_xspeed = 1
@@ -78,6 +78,10 @@ while not gameExit:
         if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w or event.key == pygame.K_s:
                             y2_change = 0
+        if y1 + (y1_change+9) >= window_height or y1 + (y1_change-9) <= ScoreBarHeight:
+                y1_change = 0
+        if y2 + (y2_change+9) >= window_height or y2 + (y2_change-9) <= ScoreBarHeight:
+                y2_change = 0
         #END Paddle Movement
 
         
