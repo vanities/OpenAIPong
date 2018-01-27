@@ -63,7 +63,7 @@ myFont = pygame.font.SysFont("Times New Roman", 20)
 myarray = list()
 
 def angleCalc(paddle_y, ball_y):
-        y = 5 * ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / paddleC_h*0.5 )
+        y =  5* ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / paddleC_h*.5 )
         return y
 
 
@@ -129,7 +129,7 @@ while not gameExit:
                     ball_x +=1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleP_y, ball_y)
-                    ball_yspeed = ball_xspeed * math.sin(angle)
+                    ball_yspeed = ball_xspeed * math.sin(angle) *2
                     cpuTreat = 1
         #if ball_x == paddleC_x:
         #    if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleC_h):     #CPU paddle
@@ -138,7 +138,7 @@ while not gameExit:
                     ball_x -= 1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleC_y, ball_y)
-                    ball_yspeed = ball_xspeed * math.sin(angle) *-1
+                    ball_yspeed = ball_xspeed * math.sin(angle) *-2
                     cpuTreat = 1
                     
         #END Ball/Paddle Collision
