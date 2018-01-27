@@ -50,14 +50,14 @@ paddle_speed = 2
 ball_x = 0.5 * window_width
 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
-ball_yspeed = random.randint(-3,3)
+ball_yspeed = random.randint(-1,1)
 #score text
 playerScore = 0
 cpuScore = 0
 playerTreat = 0
 cpuTreat = 0
 
-myFont = pygame.font.SysFont("none", 20)
+myFont = pygame.font.SysFont("Times New Roman", 20)
 
 #cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
 #playerScoreDisplay = myFont.render(str(playerScore), 1, white)
@@ -90,17 +90,20 @@ while not gameExit:
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                             paddleP_change = - (paddle_speed)
-                    if event.key == pygame.K_DOWN:
+                    elif event.key == pygame.K_DOWN:
                             paddleP_change = (paddle_speed)
                     if event.key == pygame.K_w:
                             paddleC_change = - (paddle_speed)
-                    if event.key == pygame.K_s:
+                    elif event.key == pygame.K_s:
                             paddleC_change = (paddle_speed)
-        if event.type == pygame.KEYUP:
+        elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             paddleP_change = 0
                     if event.key == pygame.K_w or event.key == pygame.K_s:
                             paddleC_change = 0
+        
+
+        # bounding box for the paddles
         if paddleP_y + (paddleP_change+paddleP_h) >= window_height or paddleP_y + (paddleP_change) <= ScoreBarHeight:
                 paddleP_change = 0
         if paddleC_y + (paddleC_change+paddleC_h) >= window_height or paddleC_y + (paddleC_change) <= ScoreBarHeight:
@@ -119,11 +122,10 @@ while not gameExit:
         #END Ball Movement
 
 
-
         #Ball/Paddle Collision
         #if ball_x - ball_xspeed <= paddleP_x - paddleP_w + 1 and
 
-        
+        # ball Collision
         if ball_x == paddleP_x:
             if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):       #Player paddle
                     ball_x += 1
@@ -168,7 +170,7 @@ while not gameExit:
 
 
         #Ball Vertical Limit
-        if ball_y + ball_yspeed <= ScoreBarHeight:
+        if ball_y + ball_yspeed <= ScoreBarHeight - 1:
                 ball_y += (ScoreBarHeight-ball_y)-ball_yspeed
                 ball_yspeed = -1* ball_yspeed
         elif ball_y + ball_yspeed >= window_height:
@@ -180,8 +182,7 @@ while not gameExit:
         #END Ball Vertical Limit
 
 
-        #Update and Display Score 
-        
+        #Update and Display Score
         cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
         playerScoreDisplay = myFont.render(str(playerScore), 1, white)
         gameDisplay.blit(cpuScoreDisplay, (window_width*3/4, ScoreBarHeight/2 - 10))
