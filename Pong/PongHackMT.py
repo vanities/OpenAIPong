@@ -57,7 +57,7 @@ cpuScore = 0
 playerTreat = 0
 cpuTreat = 0
 
-myFont = pygame.font.SysFont("Times New Roman", 20)
+myFont = pygame.font.SysFont("Courier New", 20, bold=True)
 
 #gameloop
 myarray = list()
@@ -129,7 +129,7 @@ while not gameExit:
                     ball_x +=1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleP_y, ball_y)
-                    ball_yspeed = ball_xspeed * math.sin(angle)
+                    ball_yspeed = ball_xspeed * math.sin(angle)*2
                     cpuTreat = 1
         #if ball_x == paddleC_x:
         #    if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleC_h):     #CPU paddle
