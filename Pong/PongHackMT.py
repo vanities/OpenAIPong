@@ -154,5 +154,5 @@ while not gameExit:
 
         #END Update and Display Score
         
-        myarray.append(pygame.surfarray.pixels2d(gameDisplay))
+        #myarray.append(pygame.surfarray.pixels2d(gameDisplay))
         clock.tick(15)
