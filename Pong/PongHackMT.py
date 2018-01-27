@@ -49,13 +49,13 @@ paddle_speed = 1
 ball_x = 0.5 * window_width
 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
-ball_yspeed = random.randint(-3,3)
+ball_yspeed = 0#random.randint(-3,3)
 #gameloop
 
 gameExit = False
 while not gameExit:
-        while ball_yspeed == 0:
-                ball_yspeed = random.randint(-3,3)
+        #while ball_yspeed == 0:
+                #ball_yspeed = random.randint(-3,3)
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -99,11 +99,11 @@ while not gameExit:
 
         #Ball/Paddle Collision
         if ball_x == paddleP_x:
-            if ball_y >= (paddleP_y - (paddleP_w - 1)/2) and ball_y <= (paddleP_y + (paddleP_w - 1)/2):
+            if ball_y >= (paddleP_y - (paddleP_h - 1)/2) and ball_y <= (paddleP_y + (paddleP_h - 1)/2):
                     ball_x += 1
                     ball_xspeed *= -1
         if ball_x == paddleC_x:
-            if ball_y >= (paddleC_y - (paddleC_w - 1)/2) and ball_y <= (paddleC_y + (paddleC_w - 1)/2):
+            if ball_y >= (paddleC_y - (paddleC_h - 1)/2) and ball_y <= (paddleC_y + (paddleC_h - 1)/2):
                     ball_x -= 1
                     ball_xspeed *= -1
         #END Ball/Paddle Collision
