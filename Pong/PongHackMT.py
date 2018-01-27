@@ -25,7 +25,7 @@ paddleP_w = 1
 paddleC_h = 15
 paddleC_w = 1
 
-black = (0, 0, 0)
+BLACK = (0, 0, 0)
 
 clock = pygame.time.Clock()
 
@@ -59,9 +59,10 @@ cpuScore = 0
 myFont = pygame.font.SysFont("Times New Roman", 20)
 
 cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
-playerScoreDisplay = myFont.render(str(playerScore), 1, white)
+playerScoreDisplay = myFont.render(str(playerScore), 1, white)\
 #gameloop
 myarray = list()
+data = pygame.surfarray.array3d(gameDisplay)
 
 gameExit = False
 while not gameExit:
@@ -106,12 +107,10 @@ while not gameExit:
         paddleC_y += paddleC_change
         ball_x += ball_xspeed
         pygame.display.update()
-        gameDisplay.fill(black)
+        gameDisplay.fill(BLACK)
         paddle1(paddleP_x,paddleP_y)
         paddle2(paddleC_x,paddleC_y)
         #END Ball Movement
-
-
 
         #Ball/Paddle Collision
         if ball_x == paddleP_x:
@@ -168,3 +167,7 @@ while not gameExit:
         myarray.pop(0) # Clear first element
 
         clock.tick(30)
+        data = pygame.surfarray.array3d(gameDisplay)
+        gameExit = True
+
+print(data)
