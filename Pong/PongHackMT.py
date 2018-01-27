@@ -51,6 +51,14 @@ ball_x = 0.5 * window_width
 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
 ball_yspeed = random.randint(-3,3)
+#score text
+playerScoure = 1
+cpuScoure = 25
+
+myFont = pygame.font.SysFont("none", 20)
+
+randNumLabel = myFont.render(str(cpuScoure), 1, white)
+diceDisplay = myFont.render(str(playerScoure), 1, white)
 #gameloop
 myarray = list()
 
@@ -62,13 +70,13 @@ while not gameExit:
 
         while ball_yspeed == 0:
                 ball_yspeed = random.randint(-3,3)
-                
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
 
-        #Paddle Movement    
+        #Paddle Movement
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                             paddleP_change = - (paddle_speed)
@@ -91,7 +99,7 @@ while not gameExit:
                 paddleC_change = 0
         #END Paddle Movement
 
-        
+
         #Ball Movement
         paddleP_y += paddleP_change
         paddleC_y += paddleC_change
@@ -102,7 +110,7 @@ while not gameExit:
         paddle2(paddleC_x,paddleC_y)
         #END Ball Movement
 
-        
+
 
         #Ball/Paddle Collision
         if ball_x == paddleP_x:
@@ -125,7 +133,7 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
-                
+
         #If CPU Loses
         if (ball_x>window_width):
                 ball_x = 0.5 * window_width
@@ -151,9 +159,15 @@ while not gameExit:
 
 
         #Update and Display Score
-
+        screen.blit(randNumLabel, (1, 5))
+        screen.blit(diceDisplay, (45, 5))
         #END Update and Display Score
+<<<<<<< HEAD
         
         #myarray.append(pygame.surfarray.pixels2d(gameDisplay))
         #gameDisplay.unlock()
+=======
+
+
+>>>>>>> ab6ce3b0c614ec2d6febbd4b5a7f30da4860118b
         clock.tick(15)
