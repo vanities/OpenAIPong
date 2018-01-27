@@ -17,12 +17,12 @@ windowDisplay = pygame.display.set_mode((window_width,window_height))
 #Title
 pygame.display.set_caption("PongHackMT")
 
-ball_h = 3
-ball_w = 3
-paddleP_h = 15
-paddleP_w = 3
-paddleC_h = 15
-paddleC_w = 3
+ball_h = 9
+ball_w = 9
+paddleP_h = 45
+paddleP_w = 15
+paddleC_h = 45
+paddleC_w = 15
 
 black = (0, 0, 0)
 
@@ -40,7 +40,7 @@ def paddle2(paddleC_x,paddleC_y):
         gameDisplay.blit(paddle2_img,(paddleC_x,paddleC_y))
 def ball(ball_x,ball_y):
         gameDisplay.blit(ball_img, (ball_x,ball_y))
-paddleC_x = window_width - 10
+paddleC_x = window_width - 10 - paddleC_w
 paddleP_x = 10
 paddleP_y = (0.5*(window_height-ScoreBarHeight))+ScoreBarHeight
 paddleC_y = paddleP_y
@@ -63,7 +63,7 @@ myFont = pygame.font.SysFont("Times New Roman", 20)
 myarray = list()
 
 def angleCalc(paddle_y, ball_y):
-        y = 5 * ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / 25 )
+        y = 5 * ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / paddleC_h*0.5 )
         return y
 
 
@@ -126,7 +126,7 @@ while not gameExit:
         # ball Collision
         #if ball_x == paddleP_x:
         #    if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):       #Player paddle
-                    ball_x += 1
+                    ball_x +=1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleP_y, ball_y)
                     ball_yspeed = ball_xspeed * math.sin(angle)
