@@ -163,7 +163,10 @@ while not gameExit:
                 ball_yspeed = random.randint(-3,3)
                 playerScore += 1
                 cpuTreat = -2
-
+        #When Score reaches 20
+        if playerScore == 20 or cpuScore == 20:
+                pygame.quit()
+                sys.exit()
         #END Ball Out of Bounds
 
 
