@@ -86,9 +86,9 @@ while not gameExit:
         if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w or event.key == pygame.K_s:
                             paddleC_change = 0
-        if paddleP_y + (paddleP_change+9) >= window_height or paddleP_y + (paddleP_change-9) <= ScoreBarHeight:
+        if paddleP_y + (paddleP_change+paddleP_h) >= window_height or paddleP_y + (paddleP_change) <= ScoreBarHeight:
                 paddleP_change = 0
-        if paddleC_y + (paddleC_change+9) >= window_height or paddleC_y + (paddleC_change-9) <= ScoreBarHeight:
+        if paddleC_y + (paddleC_change+paddleC_h) >= window_height or paddleC_y + (paddleC_change) <= ScoreBarHeight:
                 paddleC_change = 0
         #END Paddle Movement
 
