@@ -33,21 +33,21 @@ ball_img = pygame.image.load('ball.png')
 
 gameDisplay = pygame.display.set_mode((window_width,window_height))
 
-def paddle1(x1,y1):
-        gameDisplay.blit(paddle1_img,(x1,y1))
-def paddle2(x2,y2):
-        gameDisplay.blit(paddle2_img,(x2,y2))
+def paddle1(paddleP_x,paddleP_y):
+        gameDisplay.blit(paddle1_img,(paddleP_x,paddleP_y))
+def paddle2(paddleC_x,paddleC_y):
+        gameDisplay.blit(paddle2_img,(paddleC_x,paddleC_y))
 def ball(ball_x,ball_y):
         gameDisplay.blit(ball_img, (ball_x,ball_y))
-x1 = window_width - 10
-x2 = 10
-y1 = 0.5 * window_height
-y2 = y1
-y1_change = 0
-y2_change = 0
+paddleC_x = window_width - 10
+paddleP_x = 10
+paddleP_y = (0.5*(window_height-ScoreBarHeight))+ScoreBarHeight
+paddleC_y = paddleP_y
+paddleP_change = 0
+paddleC_change = 0
 paddle_speed = 1
 ball_x = 0.5 * window_width
-ball_y = 0.5 * window_height
+ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
 ball_yspeed = random.randint(-3,3)
 #gameloop
@@ -64,35 +64,35 @@ while not gameExit:
         #Paddle Movement    
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                            y1_change = - (paddle_speed)
+                            paddleP_change = - (paddle_speed)
                     if event.key == pygame.K_DOWN:
-                            y1_change = (paddle_speed)
+                            paddleP_change = (paddle_speed)
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
-                            y2_change = - (paddle_speed)
+                            paddleC_change = - (paddle_speed)
                     if event.key == pygame.K_s:
-                            y2_change = (paddle_speed)
+                            paddleC_change = (paddle_speed)
         if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                            y1_change = 0
+                            paddleP_change = 0
         if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w or event.key == pygame.K_s:
-                            y2_change = 0
-        if y1 + (y1_change+9) >= window_height or y1 + (y1_change-9) <= ScoreBarHeight:
-                y1_change = 0
-        if y2 + (y2_change+9) >= window_height or y2 + (y2_change-9) <= ScoreBarHeight:
-                y2_change = 0
+                            paddleC_change = 0
+        if paddleP_y + (paddleP_change+9) >= window_height or paddleP_y + (paddleP_change-9) <= ScoreBarHeight:
+                paddleP_change = 0
+        if paddleC_y + (paddleC_change+9) >= window_height or paddleC_y + (paddleC_change-9) <= ScoreBarHeight:
+                paddleC_change = 0
         #END Paddle Movement
 
         
         #Ball Movement
-        y1 += y1_change
-        y2 += y2_change
+        paddleP_y += paddleP_change
+        paddleC_y += paddleC_change
         ball_x += ball_xspeed
         pygame.display.update()
         gameDisplay.fill(black)
-        paddle1(x1,y1)
-        paddle2(x2,y2)
+        paddle1(paddleP_x,paddleP_y)
+        paddle2(paddleC_x,paddleC_y)
         #END Ball Movement
 
         
