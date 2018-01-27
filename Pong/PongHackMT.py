@@ -19,9 +19,9 @@ pygame.display.set_caption("PongHackMT")
 
 ball_height = 1
 ball_width = 1
-paddleP_h = 10
+paddleP_h = 15
 paddleP_w = 1
-paddleC_h = 10
+paddleC_h = 15
 paddleC_w = 1
 
 black = (0, 0, 0)
