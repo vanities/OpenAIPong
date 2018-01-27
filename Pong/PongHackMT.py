@@ -7,7 +7,7 @@ from pygame.locals import *
 pygame.init()
 
 window_width = 500
-window_height = 620
+window_height = 500
 ScoreBarHeight = 30
 
 white = (255, 255, 255)
@@ -46,11 +46,11 @@ paddleP_y = (0.5*(window_height-ScoreBarHeight))+ScoreBarHeight
 paddleC_y = paddleP_y
 paddleP_change = 0
 paddleC_change = 0
-paddle_speed = 2
+paddle_speed = window_height/105
 ball_x = 0.5 * window_width
 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
-ball_xspeed = 1
-ball_yspeed = random.randint(-1,1)
+ball_xspeed = window_width/160
+ball_yspeed = random.randint(-1,1)*window_height/210
 #score text
 playerScore = 0
 cpuScore = 0
@@ -70,7 +70,7 @@ def angleCalc(paddle_y, ball_y):
 gameExit = False
 while not gameExit:
 
-        scoresLine = pygame.draw.rect(gameDisplay, white, (0, 29, 160, 2), 0)
+        scoresLine = pygame.draw.rect(gameDisplay, white, (0, ScoreBarHeight-1, window_width, 2), 0)
         pygame.display.update()
         playerTreat = 0
         cpuTreat = 0
@@ -87,13 +87,13 @@ while not gameExit:
         #Paddle Movement
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                            paddleP_change += - (paddle_speed)
+                            paddleP_change = - (paddle_speed)
                     elif event.key == pygame.K_DOWN:
-                            paddleP_change += (paddle_speed)
+                            paddleP_change = (paddle_speed)
                     if event.key == pygame.K_w:
-                            paddleC_change += - (paddle_speed)
+                            paddleC_change = - (paddle_speed)
                     elif event.key == pygame.K_s:
-                            paddleC_change += (paddle_speed)
+                            paddleC_change = (paddle_speed)
         elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             paddleP_change = 0
@@ -151,7 +151,7 @@ while not gameExit:
         if (ball_x<0):
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
-                ball_xspeed = 1
+                #ball_xspeed *= 
                 ball_yspeed = random.randint(-3,3)
                 cpuScore += 1
                 playerTreat = -2
@@ -160,7 +160,7 @@ while not gameExit:
         if (ball_x>window_width):
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
-                ball_xspeed = -1
+                #ball_xspeed = -1
                 ball_yspeed = random.randint(-3,3)
                 playerScore += 1
                 cpuTreat = -2
