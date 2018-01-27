@@ -48,7 +48,7 @@ paddle_speed = 3
 x = 0.5 * window_width
 y = 0.5 * window_height
 ball_xspeed = 1
-ball_yspeed = 4
+ball_yspeed = random.randint(-3,3)
 #gameloop
 
 gameExit = False
@@ -59,24 +59,27 @@ while not gameExit:
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        if event.type == pygame.KEYDOWN:
+
+            #Paddle Movement    
+            if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                             y1_change = - (paddle_speed)
                     if event.key == pygame.K_DOWN:
                             y1_change = (paddle_speed)
-        if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
                             y2_change = - (paddle_speed)
                     if event.key == pygame.K_s:
                             y2_change = (paddle_speed)
-        if event.type == pygame.KEYUP:
+            if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             y1_change = 0
-        if event.type == pygame.KEYUP:
+            if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w or event.key == pygame.K_s:
                             y2_change = 0
-        if y + ball_yspeed <= 0 or y + ball_yspeed >= window_height:
-                    ball_yspeed = -1 * ball_yspeed
+            #END Paddle Movement
+
+        #Ball Movement
         y1 += y1_change
         y2 += y2_change
         x += ball_xspeed
@@ -86,4 +89,31 @@ while not gameExit:
         paddle1(x1,y1)
         paddle2(x2,y2)
         ball(x,y)
+        #END Ball Movement
+
+        
+
+        #Ball/Paddle Collision
+
+        #END Ball/Paddle Collision
+
+
+
+        #Ball Out of Bounds
+
+        #END Ball Out of Bounds
+
+
+
+        #Ball Vertical Limit
+
+        #END Ball Vertical Limit
+
+
+
+        #Update and Display Score
+
+        #END Update and Display Score
+
+
         clock.tick(15)
