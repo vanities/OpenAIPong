@@ -6,11 +6,18 @@ from pygame.locals import *
 #initialise the pygame module
 pygame.init()
 
+REWARD=0
+# move up, move down, stop
+ACTIONS=np.array([0,0,0])
+# y value for p1, y for p2, x for ball, y for ball, direction of ball
+FEATURES=np.array([0,0,0,0,0])
+
 window_width = 160
 window_height = 210
 ScoreBarHeight = 30
 
 white = (255, 255, 255)
+black = (0, 0, 0)
 
 # set up display size
 windowDisplay = pygame.display.set_mode((window_width,window_height))
@@ -24,7 +31,6 @@ paddleP_w = 1
 paddleC_h = 15
 paddleC_w = 1
 
-black = (0, 0, 0)
 
 clock = pygame.time.Clock()
 
@@ -63,7 +69,20 @@ playerScoreDisplay = myFont.render(str(playerScore), 1, white)
 myarray = list()
 
 gameExit = False
+
+state_size=5
+action_size=3
+agent = DQNAgent(state_size, action_size)
+batch_size = 32
+EPISODES = 10
+
+
 while not gameExit:
+
+        player_hit = 0
+        computer_hit = 0
+        player_scored = 0
+        computer_scored = 0
 
         scoresLine = pygame.draw.rect(gameDisplay, white, (0, 29, 160, 2), 0)
         pygame.display.update()
@@ -80,16 +99,16 @@ while not gameExit:
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                             paddleP_change = - (paddle_speed)
-                    elif event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_DOWN:
                             paddleP_change = (paddle_speed)
-                    elif event.key == pygame.K_w:
+                    if event.key == pygame.K_w:
                             paddleC_change = - (paddle_speed)
-                    elif event.key == pygame.K_s:
+                    if event.key == pygame.K_s:
                             paddleC_change = (paddle_speed)
         elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             paddleP_change = 0
-                    elif event.key == pygame.K_w or event.key == pygame.K_s:
+                    if event.key == pygame.K_w or event.key == pygame.K_s:
                             paddleC_change = 0
         
 
@@ -118,10 +137,13 @@ while not gameExit:
             if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):
                     ball_x += 1
                     ball_xspeed *= -1
+                    player_hit = 1
+
         if ball_x == paddleC_x:
             if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleP_h):
                     ball_x -= 1
                     ball_xspeed *= -1
+                    computer_hit = 1
         #END Ball/Paddle Collision
 
 
@@ -135,6 +157,7 @@ while not gameExit:
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
                 cpuScore += 1
+                computer_scored = 1
 
         #If CPU Loses
         if (ball_x>window_width):
@@ -143,6 +166,7 @@ while not gameExit:
                 ball_xspeed = -1
                 ball_yspeed = random.randint(-3,3)
                 playerScore += 1
+                player_scored = 1
 
         #END Ball Out of Bounds
 
@@ -172,3 +196,16 @@ while not gameExit:
         myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
 
         clock.tick(30)
+
+        if player_hit:
+            print('player hit')
+        if computer_hit:
+            print('computer hit')
+            REWARD+=1
+
+        if player_scored:
+            print('player scored')
+            REWARD-=10
+        if computer_scored:
+            print('computer scored')
+            REWARD+=10
