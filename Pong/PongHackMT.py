@@ -1,6 +1,6 @@
 # import
 
-import pygame, sys, random
+import pygame, sys, random, math
 from pygame.locals import *
 
 #initialise the pygame module
@@ -54,19 +54,29 @@ ball_yspeed = random.randint(-3,3)
 #score text
 playerScore = 0
 cpuScore = 0
+playerTreat = 0
+cpuTreat = 0
 
 myFont = pygame.font.SysFont("none", 20)
 
-cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
-playerScoreDisplay = myFont.render(str(playerScore), 1, white)
+#cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
+#playerScoreDisplay = myFont.render(str(playerScore), 1, white)
 #gameloop
 myarray = list()
+
+def angleCalc(paddle_y, ball_y):
+        y = 5 * ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / 25 )
+        return y
+
 
 gameExit = False
 while not gameExit:
 
         scoresLine = pygame.draw.rect(gameDisplay, white, (0, 29, 160, 2), 0)
         pygame.display.update()
+        playerTreat = 0
+        cpuTreat = 0
+
 
         while ball_yspeed == 0:
                 ball_yspeed = random.randint(-3,3)
@@ -82,7 +92,6 @@ while not gameExit:
                             paddleP_change = - (paddle_speed)
                     if event.key == pygame.K_DOWN:
                             paddleP_change = (paddle_speed)
-        if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
                             paddleC_change = - (paddle_speed)
                     if event.key == pygame.K_s:
@@ -90,7 +99,6 @@ while not gameExit:
         if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             paddleP_change = 0
-        if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w or event.key == pygame.K_s:
                             paddleC_change = 0
         if paddleP_y + (paddleP_change+paddleP_h) >= window_height or paddleP_y + (paddleP_change) <= ScoreBarHeight:
@@ -113,14 +121,24 @@ while not gameExit:
 
 
         #Ball/Paddle Collision
+        #if ball_x - ball_xspeed <= paddleP_x - paddleP_w + 1 and
+
+        
         if ball_x == paddleP_x:
-            if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):
+            if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):       #Player paddle
                     ball_x += 1
                     ball_xspeed *= -1
+                    angle = angleCalc(paddleP_y, ball_y)
+                    ball_yspeed = ball_xspeed * math.sin(angle)
+                    cpuTreat = 1
         if ball_x == paddleC_x:
-            if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleP_h):
+            if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleC_h):     #CPU paddle
                     ball_x -= 1
                     ball_xspeed *= -1
+                    angle = angleCalc(paddleC_y, ball_y)
+                    ball_yspeed = ball_xspeed * math.sin(angle) *-1
+                    cpuTreat = 1
+                    
         #END Ball/Paddle Collision
 
 
@@ -134,6 +152,7 @@ while not gameExit:
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
                 cpuScore += 1
+                playerTreat = -2
 
         #If CPU Loses
         if (ball_x>window_width):
@@ -142,6 +161,7 @@ while not gameExit:
                 ball_xspeed = -1
                 ball_yspeed = random.randint(-3,3)
                 playerScore += 1
+                cpuTreat = -2
 
         #END Ball Out of Bounds
 
