@@ -17,9 +17,9 @@ pygame.display.set_caption("PongHackMT")
 
 ball_height = 1
 ball_width = 1
-paddleP_h = 11
+paddleP_h = 10
 paddleP_w = 1
-paddleC_h = 11
+paddleC_h = 10
 paddleC_w = 1
 
 black = (0, 0, 0)
@@ -99,11 +99,11 @@ while not gameExit:
 
         #Ball/Paddle Collision
         if ball_x == paddleP_x:
-            if ball_y >= (paddleP_y - (paddleP_h - 1)/2) and ball_y <= (paddleP_y + (paddleP_h - 1)/2):
+            if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):
                     ball_x += 1
                     ball_xspeed *= -1
         if ball_x == paddleC_x:
-            if ball_y >= (paddleC_y - (paddleC_h - 1)/2) and ball_y <= (paddleC_y + (paddleC_h - 1)/2):
+            if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleP_h):
                     ball_x -= 1
                     ball_xspeed *= -1
         #END Ball/Paddle Collision
