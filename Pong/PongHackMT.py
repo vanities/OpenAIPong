@@ -151,6 +151,5 @@ while not gameExit:
 
         #END Update and Display Score
         
-        myarray.append(get_view())
 
         clock.tick(15)
