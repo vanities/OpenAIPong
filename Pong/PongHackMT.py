@@ -124,8 +124,6 @@ while not gameExit:
                     ball_xspeed *= -1
         #END Ball/Paddle Collision
 
-
-
         #Ball Out of Bounds
 
         #If Player Loses
@@ -134,10 +132,7 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
-<<<<<<< HEAD
-=======
                 cpuScore += 1
->>>>>>> 326730f06f1016c4cdfb3cd9b4233b34cd2b5dfa
 
         #If CPU Loses
         if (ball_x>window_width):
@@ -148,8 +143,6 @@ while not gameExit:
                 playerScore += 1
 
         #END Ball Out of Bounds
-
-
 
         #Ball Vertical Limit
         if ball_y + ball_yspeed <= ScoreBarHeight - 1:
@@ -163,19 +156,15 @@ while not gameExit:
         ball(ball_x,ball_y)
         #END Ball Vertical Limit
 
-
         #Update and Display Score
         cpuScoreDisplay = myFont.render(str(cpuScore), 1, white)
         playerScoreDisplay = myFont.render(str(playerScore), 1, white)
         gameDisplay.blit(cpuScoreDisplay, (window_width*3/4, ScoreBarHeight/2 - 10))
         gameDisplay.blit(playerScoreDisplay, (window_width/4, ScoreBarHeight/2 - 10))
         #END Update and Display Score
-<<<<<<< HEAD
-
-=======
->>>>>>> 326730f06f1016c4cdfb3cd9b4233b34cd2b5dfa
 
         #SOMEONE PLEASE CHECK THE FOLLWOING LINE FOR MEMORY LEAK
         myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
+        myarray.pop(0) # Clear first element
 
         clock.tick(30)
