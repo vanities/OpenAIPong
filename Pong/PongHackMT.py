@@ -7,7 +7,7 @@ from pygame.locals import *
 pygame.init()
 
 # set up display size
-windowDisplay = pygame.display.set_mode((300, 300))
+windowDisplay = pygame.display.set_mode((210, 160))
 
 #Title
 pygame.display.set_caption("PongHackMT")
