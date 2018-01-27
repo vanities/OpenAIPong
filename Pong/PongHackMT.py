@@ -3,14 +3,69 @@
 import pygame, sys, random
 from pygame.locals import *
 
+import random
+import gym
+import numpy as np
+from collections import deque
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.optimizers import Adam
+
+class DQNAgent:
+    def __init__(self, state_size, action_size):
+        self.state_size = state_size
+        self.action_size = action_size
+        self.memory = deque(maxlen=2000)
+        self.gamma = 0.95    # discount rate
+        self.epsilon = 1.0  # exploration rate
+        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.995
+        self.learning_rate = 0.001
+        self.model = self._build_model()
+
+    def _build_model(self):
+        # Neural Net for Deep-Q learning Model
+        model = Sequential()
+        model.add(Dense(24, input_dim=self.state_size, activation='relu'))
+        model.add(Dense(24, activation='relu'))
+        model.add(Dense(self.action_size, activation='linear'))
+        model.compile(loss='mse',
+                      optimizer=Adam(lr=self.learning_rate))
+        return model
+
+    def remember(self, state, action, reward, next_state, done):
+        self.memory.append((state, action, reward, next_state, done))
+
+    def act(self, state):
+        if np.random.rand() <= self.epsilon:
+            return random.randrange(self.action_size)
+        act_values = self.model.predict(state)
+        return np.argmax(act_values[0])  # returns action
+
+    def replay(self, batch_size):
+        minibatch = random.sample(self.memory, batch_size)
+        for state, action, reward, next_state, done in minibatch:
+            target = reward
+            if not done:
+                target = (reward + self.gamma *
+                          np.amax(self.model.predict(next_state)[0]))
+            target_f = self.model.predict(state)
+            target_f[0][action] = target
+            self.model.fit(state, target_f, epochs=1, verbose=0)
+        if self.epsilon > self.epsilon_min:
+            self.epsilon *= self.epsilon_decay
+
+    def load(self, name):
+        self.model.load_weights(name)
+
+    def save(self, name):
+        self.model.save_weights(name)
+
+
+
 #initialise the pygame module
 pygame.init()
 
-REWARD=0
-# move up, move down, stop
-ACTIONS=np.array([0,0,0])
-# y value for p1, y for p2, x for ball, y for ball, direction of ball
-FEATURES=np.array([0,0,0,0,0])
 
 window_width = 160
 window_height = 210
@@ -70,11 +125,24 @@ myarray = list()
 
 gameExit = False
 
-state_size=5
+state_size=8
 action_size=3
 agent = DQNAgent(state_size, action_size)
 batch_size = 32
 EPISODES = 10
+
+REWARD=0
+# move up, stop, move down
+ACTIONS=np.array([0,0,0])
+# player y
+# change in player y
+# opponent y
+# change in opponent y
+# ball x
+# ball y
+# change in ball x
+# change in ball y
+FEATURES=np.array([0,0,0,0,0,0,0,0])
 
 
 while not gameExit:
@@ -95,6 +163,33 @@ while not gameExit:
                 pygame.quit()
                 sys.exit()
 
+        action = agent.act(state)       
+        def step(action):
+            # up
+            if action == 0:
+                paddleC_change = - (paddle_speed)
+            # down
+            if action == 2:
+                paddleC_change = (paddle_speed)
+
+            if ball_x<0:
+                done = True
+            else:
+                done = False
+            
+            return (np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
+                                   ball_x, ball_y, ball_xspeed,  ball_yspeed]), REWARD, 0)
+        next_state, reward, done, _ = step(action)
+        next_state = np.reshape(next_state, [1, state_size])
+        agent.remember(state, action, reward, next_state, done)
+        state = next_state
+
+        if done:
+            print('Reward:', REWARD)
+            break
+        if len(agent.memory) > batch_size:
+            agent.replay(batch_size)
+            
         #Paddle Movement
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
@@ -152,12 +247,17 @@ while not gameExit:
 
         #If Player Loses
         if (ball_x<0):
+                # reset 
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
                 cpuScore += 1
                 computer_scored = 1
+                state = np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
+                                   ball_x, ball_y, ball_xspeed,  ball_yspeed])
+
+                state = np.reshape(state, [1, state_size])
 
         #If CPU Loses
         if (ball_x>window_width):
@@ -167,9 +267,13 @@ while not gameExit:
                 ball_yspeed = random.randint(-3,3)
                 playerScore += 1
                 player_scored = 1
+                state = np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
+                                   ball_x, ball_y, ball_xspeed,  ball_yspeed])
+
+                state = np.reshape(state, [1, state_size])
+                
 
         #END Ball Out of Bounds
-
 
 
         #Ball Vertical Limit
@@ -209,3 +313,5 @@ while not gameExit:
         if computer_scored:
             print('computer scored')
             REWARD+=10
+
+
