@@ -63,7 +63,7 @@ myFont = pygame.font.SysFont("Times New Roman", 20)
 myarray = list()
 
 def angleCalc(paddle_y, ball_y):
-        y = 5 * ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / 45 )
+        y = 5 * ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / paddleC_h*0.5 )
         return y
 
 
@@ -126,7 +126,7 @@ while not gameExit:
         # ball Collision
         #if ball_x == paddleP_x:
         #    if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):       #Player paddle
-                    ball_x += 1
+                    ball_x +=1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleP_y, ball_y)
                     ball_yspeed = ball_xspeed * math.sin(angle)
