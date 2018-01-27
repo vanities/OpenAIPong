@@ -52,13 +52,13 @@ ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
 ball_yspeed = random.randint(-3,3)
 #score text
-playerScoure = 1
-cpuScoure = 25
+playerScore = 0
+cpuScore = 0
 
 myFont = pygame.font.SysFont("none", 20)
 
-randNumLabel = myFont.render(str(cpuScoure), 1, white)
-diceDisplay = myFont.render(str(playerScoure), 1, white)
+randNumLabel = myFont.render(str(cpuScore), 1, white)
+diceDisplay = myFont.render(str(playerScore), 1, white)
 #gameloop
 myarray = list()
 
@@ -133,6 +133,7 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
+                cpuScore += 1
 
         #If CPU Loses
         if (ball_x>window_width):
@@ -140,6 +141,7 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = -1
                 ball_yspeed = random.randint(-3,3)
+                playerScore += 1
 
         #END Ball Out of Bounds
 
@@ -159,11 +161,11 @@ while not gameExit:
 
 
         #Update and Display Score
-        screen.blit(randNumLabel, (1, 5))
-        screen.blit(diceDisplay, (45, 5))
+        gameDisplay.blit(randNumLabel, (1, 5))
+        gameDisplay.blit(diceDisplay, (45, 5))
         #END Update and Display Score
-        
-        #myarray.append(pygame.surfarray.pixels2d(gameDisplay))
-        #gameDisplay.unlock()
+
+        #SOMEONE PLEASE CHECK THE FOLLWOING LINE FOR MEMORY LEAK
+        myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
 
         clock.tick(15)
