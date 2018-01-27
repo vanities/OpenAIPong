@@ -51,9 +51,13 @@ ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
 ball_yspeed = random.randint(-3,3)
 #gameloop
+myarray = list()
 
 gameExit = False
 while not gameExit:
+
+
+        
         while ball_yspeed == 0:
                 ball_yspeed = random.randint(-3,3)
         for event in pygame.event.get():
@@ -143,10 +147,10 @@ while not gameExit:
         #END Ball Vertical Limit
 
 
-
         #Update and Display Score
 
         #END Update and Display Score
-
+        
+        myarray.append(get_view())
 
         clock.tick(15)
