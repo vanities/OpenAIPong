@@ -11,6 +11,9 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import Adam
 
+# for manual training
+import csv
+
 class DQNAgent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size
@@ -75,7 +78,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 
 # set up display size
-windowDisplay = pygame.display.set_mode((window_width,window_height))
+windowDisplay = pygame.display.set_mode((window_width,window_height), HWSURFACE | DOUBLEBUF | RESIZABLE)
 #Title
 pygame.display.set_caption("PongHackMT")
 
@@ -93,7 +96,7 @@ ball_img = pygame.image.load('ball.png')
 paddle1_img = pygame.image.load('paddle.png')
 paddle2_img = pygame.image.load('paddle.png')
 
-gameDisplay = pygame.display.set_mode((window_width,window_height))
+gameDisplay = pygame.display.set_mode((window_width,window_height), HWSURFACE | DOUBLEBUF | RESIZABLE)
 
 def paddle1(paddleP_x,paddleP_y):
         gameDisplay.blit(paddle1_img,(paddleP_x,paddleP_y))
@@ -144,6 +147,8 @@ ACTIONS=np.array([0,0,0])
 # change in ball y
 FEATURES=np.array([0,0,0,0,0,0,0,0])
 
+
+myFile = open('mining.csv', 'a+')
 
 while not gameExit:
 
@@ -298,7 +303,7 @@ while not gameExit:
         #SOMEONE PLEASE CHECK THE FOLLWOING LINE FOR MEMORY LEAK
         myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
 
-        clock.tick(30)
+        clock.tick(60)
 
         if player_hit:
             print('player hit')
@@ -308,9 +313,17 @@ while not gameExit:
 
         if player_scored:
             print('player scored')
-            REWARD-=10
+            #REWARD-=10
         if computer_scored:
             print('computer scored')
-            REWARD+=10
+            #REWARD+=10
 
+        if myFile:
+            writer = csv.writer(myFile)
+            writer.writerows([{paddleP_y,paddleP_change, paddleC_y, paddleC_change,
+                                   ball_x, ball_y, ball_xspeed,  ball_yspeed, reward}])
 
+    
+if gameExit:
+    model.save('saved_model.h5')
+    myFile.close()
