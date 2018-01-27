@@ -10,6 +10,8 @@ window_width = 160
 window_height = 210
 ScoreBarHeight = 30
 
+white = (255, 255, 255)
+
 # set up display size
 windowDisplay = pygame.display.set_mode((window_width,window_height))
 #Title
@@ -54,6 +56,10 @@ ball_yspeed = 0#random.randint(-3,3)
 
 gameExit = False
 while not gameExit:
+
+        scoresLine = pygame.draw.rect(gameDisplay, white, (0, 29, 160, 2), 0)
+        pygame.display.update()
+
         #while ball_yspeed == 0:
                 #ball_yspeed = random.randint(-3,3)
         for event in pygame.event.get():
