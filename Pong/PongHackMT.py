@@ -47,12 +47,14 @@ y2_change = 0
 paddle_speed = 3
 x = 0.5 * window_width
 y = 0.5 * window_height
-ball_xspeed = 
-ball_yspeed = 
+ball_xspeed = 1
+ball_yspeed = random.randint(-3,3)
 #gameloop
 
 gameExit = False
 while not gameExit:
+        while ball_yspeed == 0:
+                ball_yspeed = random.randint(-3.3)
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -75,6 +77,8 @@ while not gameExit:
                             y2_change = 0
         y1 += y1_change
         y2 += y2_change
+        x += ball_xspeed
+        y += ball_yspeed
         pygame.display.update()
         gameDisplay.fill(black)
         paddle1(x1,y1)
