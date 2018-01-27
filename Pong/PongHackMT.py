@@ -52,10 +52,10 @@ ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = 1
 ball_yspeed = random.randint(-3,3)
 #score text
-playerScoure = 1
-cpuScoure = 25
+playerScoure = 0
+cpuScoure = 0
 
-myFont = pygame.font.SysFont("none", 20)
+myFont = pygame.font.SysFont("Times New Roman", 20)
 
 randNumLabel = myFont.render(str(cpuScoure), 1, white)
 diceDisplay = myFont.render(str(playerScoure), 1, white)
@@ -133,6 +133,8 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
+                cpuScoure += 1
+                pygame.display.update()
 
         #If CPU Loses
         if (ball_x>window_width):
@@ -140,6 +142,8 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = -1
                 ball_yspeed = random.randint(-3,3)
+                playerScoure += 1
+                pygame.display.update()
 
         #END Ball Out of Bounds
 
@@ -159,8 +163,8 @@ while not gameExit:
 
 
         #Update and Display Score
-        screen.blit(randNumLabel, (1, 5))
-        screen.blit(diceDisplay, (45, 5))
+        gameDisplay.blit(randNumLabel, (25, 5))
+        gameDisplay.blit(diceDisplay, (120, 5))
         #END Update and Display Score
 
 
