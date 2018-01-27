@@ -162,12 +162,8 @@ while not gameExit:
         screen.blit(randNumLabel, (1, 5))
         screen.blit(diceDisplay, (45, 5))
         #END Update and Display Score
-<<<<<<< HEAD
         
         #myarray.append(pygame.surfarray.pixels2d(gameDisplay))
         #gameDisplay.unlock()
-=======
 
-
->>>>>>> ab6ce3b0c614ec2d6febbd4b5a7f30da4860118b
         clock.tick(15)
