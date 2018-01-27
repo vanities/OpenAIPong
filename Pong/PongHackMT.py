@@ -13,7 +13,8 @@ ScoreBarHeight = 30
 white = (255, 255, 255)
 
 # set up display size
-windowDisplay = pygame.display.set_mode((window_width,window_height))
+windowDisplay = pygame.display.set_mode((window_width,window_height), HWSURFACE | DOUBLEBUF | RESIZABLE)
+
 #Title
 pygame.display.set_caption("PongHackMT")
 
@@ -33,7 +34,7 @@ paddle1_img = pygame.image.load('paddle.png')
 paddle2_img = pygame.image.load('paddle.png')
 ball_img = pygame.image.load('ball.png')
 
-gameDisplay = pygame.display.set_mode((window_width,window_height))
+gameDisplay = pygame.display.set_mode((window_width, window_height), HWSURFACE|DOUBLEBUF|RESIZABLE)
 
 def paddle1(paddleP_x,paddleP_y):
         gameDisplay.blit(paddle1_img,(paddleP_x,paddleP_y))
@@ -63,13 +64,13 @@ while not gameExit:
 
         while ball_yspeed == 0:
                 ball_yspeed = random.randint(-3,3)
-                
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
 
-        #Paddle Movement    
+        #Paddle Movement
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                             paddleP_change = - (paddle_speed)
@@ -92,7 +93,7 @@ while not gameExit:
                 paddleC_change = 0
         #END Paddle Movement
 
-        
+
         #Ball Movement
         paddleP_y += paddleP_change
         paddleC_y += paddleC_change
@@ -103,7 +104,7 @@ while not gameExit:
         paddle2(paddleC_x,paddleC_y)
         #END Ball Movement
 
-        
+
 
         #Ball/Paddle Collision
         if ball_x == paddleP_x:
@@ -126,7 +127,7 @@ while not gameExit:
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
                 ball_xspeed = 1
                 ball_yspeed = random.randint(-3,3)
-                
+
         #If CPU Loses
         if (ball_x>window_width):
                 ball_x = 0.5 * window_width
@@ -154,6 +155,6 @@ while not gameExit:
         #Update and Display Score
 
         #END Update and Display Score
-        
+
 
         clock.tick(15)
