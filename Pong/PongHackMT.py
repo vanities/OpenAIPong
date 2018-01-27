@@ -41,7 +41,7 @@ def ball(ball_x,ball_y):
         gameDisplay.blit(ball_img, (ball_x,ball_y))
 x1 = window_width - 10
 x2 = 10
-y1 = 0.5 * window_height
+y1 = (0.5*(window_height-ScoreBarHeight))+ScoreBarHeight
 y2 = y1
 y1_change = 0
 y2_change = 0
@@ -63,20 +63,20 @@ while not gameExit:
 
         #Paddle Movement    
         if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
+                    if event.key == pygame.K_w:
                             y1_change = - (paddle_speed)
-                    if event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_s:
                             y1_change = (paddle_speed)
         if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_w:
+                    if event.key == pygame.K_UP:
                             y2_change = - (paddle_speed)
-                    if event.key == pygame.K_s:
+                    if event.key == pygame.K_DOWN:
                             y2_change = (paddle_speed)
         if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_w or event.key == pygame.K_s:
                             y1_change = 0
         if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_w or event.key == pygame.K_s:
+                    if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             y2_change = 0
         if y1 + (y1_change+9) >= window_height or y1 + (y1_change-9) <= ScoreBarHeight:
                 y1_change = 0
