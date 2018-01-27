@@ -80,19 +80,20 @@ while not gameExit:
         if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                             paddleP_change = - (paddle_speed)
-                    if event.key == pygame.K_DOWN:
+                    elif event.key == pygame.K_DOWN:
                             paddleP_change = (paddle_speed)
-        if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_w:
+                    elif event.key == pygame.K_w:
                             paddleC_change = - (paddle_speed)
-                    if event.key == pygame.K_s:
+                    elif event.key == pygame.K_s:
                             paddleC_change = (paddle_speed)
-        if event.type == pygame.KEYUP:
+        elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             paddleP_change = 0
-        if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_w or event.key == pygame.K_s:
+                    elif event.key == pygame.K_w or event.key == pygame.K_s:
                             paddleC_change = 0
+        
+
+        # bounding box for the paddles
         if paddleP_y + (paddleP_change+paddleP_h) >= window_height or paddleP_y + (paddleP_change) <= ScoreBarHeight:
                 paddleP_change = 0
         if paddleC_y + (paddleC_change+paddleC_h) >= window_height or paddleC_y + (paddleC_change) <= ScoreBarHeight:
@@ -112,7 +113,7 @@ while not gameExit:
 
 
 
-        #Ball/Paddle Collision
+        # ball Collision
         if ball_x == paddleP_x:
             if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):
                     ball_x += 1
