@@ -1,14 +1,13 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
+
 import argparse
 import numpy as np
 import os
 import ray
 import time
 import gym
-import pygame, sys, random
-from pygame.locals import *
 
 # Define some hyperparameters.
 
@@ -200,8 +199,12 @@ if __name__ == "__main__":
             grad_buffer[k] = np.zeros_like(v)
 batch_num += 1
 
-#initialise the pygame module
+# import
+import pygame, sys, random
+from pygame.locals import *
 
+#initialise the pygame module
+pygame.init()
 
 window_width = 160
 window_height = 210
@@ -261,7 +264,7 @@ myarray = list()
 data = pygame.surfarray.array3d(gameDisplay)
 
 while True:
-        pygame.init()
+
         scoresLine = pygame.draw.rect(gameDisplay, WHITE, (0, 29, 160, 2), 0)
         pygame.display.update()
 
@@ -284,10 +287,11 @@ while True:
                             paddleC_change = -(paddle_speed)
                     if event.key == pygame.K_s:
                             paddleC_change = (paddle_speed)
-        elif event.type == pygame.KEYUP:
+        if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             paddleP_change = 0
-                    elif event.key == pygame.K_w or event.key == pygame.K_s:
+        if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_w or event.key == pygame.K_s:
                             paddleC_change = 0
         if paddleP_y + (paddleP_change + paddleP_h) >= window_height or paddleP_y + (paddleP_change) <= ScoreBarHeight:
                 paddleP_change = 0
