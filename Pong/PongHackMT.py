@@ -15,12 +15,12 @@ windowDisplay = pygame.display.set_mode((window_width,window_height))
 #Title
 pygame.display.set_caption("PongHackMT")
 
-ball_height= 1
-ball_width= 1
-paddle1_height= 1
-paddle1_width= 5
-paddle2_height= 1
-paddle2_width=5
+ball_height = 1
+ball_width = 1
+paddleP_h = 11
+paddleP_w = 1
+paddleC_h = 11
+paddleC_w = 1
 
 black = (0, 0, 0)
 
@@ -98,8 +98,14 @@ while not gameExit:
         
 
         #Ball/Paddle Collision
-        #if ball_x == x1:
-        #    if ball_y > y1 and ball_y < (y1 + paddle1_img.height()):
+        if ball_x == paddleP_x:
+            if ball_y >= (paddleP_y - (paddleP_w - 1)/2) and ball_y <= (paddleP_y + (paddleP_w - 1)/2):
+                    ball_x += 1
+                    ball_xspeed *= -1
+        if ball_x == paddleC_x:
+            if ball_y >= (paddleC_y - (paddleC_w - 1)/2) and ball_y <= (paddleC_y + (paddleC_w - 1)/2):
+                    ball_x -= 1
+                    ball_xspeed *= -1
         #END Ball/Paddle Collision
 
 
