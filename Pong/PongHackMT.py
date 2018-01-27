@@ -112,6 +112,20 @@ while not gameExit:
 
         #Ball Out of Bounds
 
+        #If Player Loses
+        if (ball_x<0):
+                ball_x = 0.5 * window_width
+                ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
+                ball_xspeed = 1
+                ball_yspeed = random.randint(-3,3)
+                
+        #If CPU Loses
+        if (ball_x>window_width):
+                ball_x = 0.5 * window_width
+                ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
+                ball_xspeed = -1
+                ball_yspeed = random.randint(-3,3)
+
         #END Ball Out of Bounds
 
 
