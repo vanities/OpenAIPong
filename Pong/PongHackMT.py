@@ -284,11 +284,10 @@ while True:
                             paddleC_change = -(paddle_speed)
                     if event.key == pygame.K_s:
                             paddleC_change = (paddle_speed)
-        if event.type == pygame.KEYUP:
+        elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             paddleP_change = 0
-        if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_w or event.key == pygame.K_s:
+                    elif event.key == pygame.K_w or event.key == pygame.K_s:
                             paddleC_change = 0
         if paddleP_y + (paddleP_change + paddleP_h) >= window_height or paddleP_y + (paddleP_change) <= ScoreBarHeight:
                 paddleP_change = 0
