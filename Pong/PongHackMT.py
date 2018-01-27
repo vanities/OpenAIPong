@@ -95,7 +95,8 @@ while not gameExit:
         
 
         #Ball/Paddle Collision
-
+        #if ball_x == x1:
+        #    if ball_y > y1 and ball_y < (y1 + paddle1_img.height()):
         #END Ball/Paddle Collision
 
 
