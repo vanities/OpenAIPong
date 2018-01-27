@@ -142,10 +142,10 @@ while True:
 
         #Ball Vertical Limit
         if ball_y + ball_yspeed <= ScoreBarHeight - 1:
-                ball_y += (ScoreBarHeight-ball_y) - ball_yspeed
+                ball_y += (ScoreBarHeight - ball_y) - ball_yspeed
                 ball_yspeed = -1 * ball_yspeed
         elif ball_y + ball_yspeed >= window_height:
-                ball_y += (window_height-ball_y) - ball_yspeed
+                ball_y += (window_height - ball_y) - ball_yspeed
                 ball_yspeed = -1 * ball_yspeed
         else:
                 ball_y += ball_yspeed
