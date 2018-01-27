@@ -40,6 +40,8 @@ def paddle2(paddleC_x,paddleC_y):
         gameDisplay.blit(paddle2_img,(paddleC_x,paddleC_y))
 def ball(ball_x,ball_y):
         gameDisplay.blit(ball_img, (ball_x,ball_y))
+
+
 paddleC_x = window_width - 10 - paddleC_w
 paddleP_x = 10
 paddleP_y = (0.5*(window_height-ScoreBarHeight))+ScoreBarHeight
@@ -51,16 +53,13 @@ ball_x = 0.5 * window_width
 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
 ball_xspeed = window_width/160
 ball_yspeed = random.randint(-1,1)*window_height/210
-#score text
+
+#Score Vars
 playerScore = 0
 cpuScore = 0
 playerTreat = 0
 cpuTreat = 0
-
 myFont = pygame.font.SysFont("Courier New", 20, bold=True)
-
-#gameloop
-myarray = list()
 
 def angleCalc(paddle_y, ball_y):
         y =  5* ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / paddleC_h*.5 )
@@ -68,6 +67,8 @@ def angleCalc(paddle_y, ball_y):
 
 
 gameExit = False
+
+#gameloop
 while not gameExit:
 
         scoresLine = pygame.draw.rect(gameDisplay, white, (0, ScoreBarHeight-1, window_width, 2), 0)
@@ -121,18 +122,16 @@ while not gameExit:
 
 
         #Ball/Paddle Collision
+        
+        #Player Paddle
         if ball_x + ball_xspeed <= paddleP_x + paddleP_w - 1 and ball_x + ball_w - 1 + ball_xspeed >= paddleP_x:
                 if ball_y + ball_yspeed <= paddleP_y + paddleP_h - 1 and ball_y + ball_h - 1 + ball_yspeed >= paddleP_y:
-        # ball Collision
-        #if ball_x == paddleP_x:
-        #    if ball_y >= paddleP_y and ball_y <= (paddleP_y + paddleP_h):       #Player paddle
                     ball_x +=1
                     ball_xspeed *= -1
                     angle = angleCalc(paddleP_y, ball_y)
                     ball_yspeed = ball_xspeed * math.sin(angle)*2
                     cpuTreat = 1
-        #if ball_x == paddleC_x:
-        #    if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleC_h):     #CPU paddle
+        #CPU paddle
         if ball_x + ball_xspeed <= paddleC_x + paddleC_w - 1 and ball_x + ball_w - 1 + ball_xspeed >= paddleC_x:
                 if ball_y + ball_yspeed <= paddleC_y + paddleC_h - 1 and ball_y + ball_h - 1 + ball_yspeed >= paddleC_y:
                     ball_x -= 1
@@ -188,8 +187,5 @@ while not gameExit:
         gameDisplay.blit(cpuScoreDisplay, (window_width*3/4, ScoreBarHeight/2 - 10))
         gameDisplay.blit(playerScoreDisplay, (window_width/4, ScoreBarHeight/2 - 10))
         #END Update and Display Score
-
-        #SOMEONE PLEASE CHECK THE FOLLWOING LINE FOR MEMORY LEAK
-        myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
 
         clock.tick(30)
