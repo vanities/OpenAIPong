@@ -250,16 +250,6 @@ while not gameExit:
                     ball_yspeed = ball_xspeed * math.sin(angle) *-2
                     cpuTreat = 1
 
-        ## NOTE: this can go
-
-        # player_hit = 1
-        #
-        #        if ball_x == paddleC_x:
-        #            if ball_y >= paddleC_y and ball_y <= (paddleC_y + paddleP_h):
-        #                    ball_x -= 1
-        #                    ball_xspeed *= -1
-        #                    computer_hit = 1
-
         #END Ball/Paddle Collision
 
 
