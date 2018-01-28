@@ -127,7 +127,7 @@ def angleCalc(paddle_y, ball_y):
 
 gameExit = False
 
-state_size = 8
+state_size = (100, 100)
 action_size = 3
 agent = DQNAgent(state_size, action_size)
 batch_size = 32
@@ -144,9 +144,9 @@ ACTIONS=np.array([0,0,0])
 # ball y
 # change in ball x
 # change in ball y
-FEATURES=np.array([0,0,0,0,0,0,0,0])
+#FEATURES=np.array([0,0,0,0,0,0,0,0])
 
-myFile = open('mining.csv', 'a+')
+#myFile = open('mining.csv', 'a+')
 
 while not gameExit:
 
@@ -169,8 +169,9 @@ while not gameExit:
                 pygame.quit()
                 sys.exit()
 
-        state = np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
-                                   ball_x, ball_y, ball_xspeed,  ball_yspeed])
+        # state = np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
+        #                            ball_x, ball_y, ball_xspeed,  ball_yspeed])
+        state = pygame.surfarray.pixels2d(gameDisplay.copy())[10:491:3, 30::3, :]#.ravel()
         action = agent.act(state)
 
         if action == 0:
@@ -184,8 +185,9 @@ while not gameExit:
         else:
             done = False
 
-        next_state, reward, done = (np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
-                                   ball_x, ball_y, ball_xspeed,  ball_yspeed]), REWARD, done)
+        # next_state, reward, done = (np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
+        #                            ball_x, ball_y, ball_xspeed,  ball_yspeed]), REWARD, done)
+        next_state, reward, done = pygame.surfarray.pixels2d(gameDisplay.copy())[10:491:3, 30::3, :]
         next_state = np.reshape(next_state, [1, state_size])
         agent.remember(state, action, reward, next_state, done)
         state = next_state
