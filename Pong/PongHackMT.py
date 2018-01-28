@@ -1,18 +1,18 @@
 # import
-
-import pygame, sys, random, math
-from pygame.locals import *
-
 import random
+import csv
 import gym
 import numpy as np
+import pygame, sys, random, math
 from collections import deque
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import Adam
+from pygame.locals import *
 
-# for manual training
-import csv
+
+TRAINING = True
+
 
 class DQNAgent:
     def __init__(self, state_size, action_size):
@@ -64,8 +64,6 @@ class DQNAgent:
     def save(self, name):
         self.model.save_weights(name)
 
-
-
 #initialise the pygame module
 pygame.init()
 
@@ -88,22 +86,21 @@ paddleP_w = 15
 paddleC_h = 45
 paddleC_w = 15
 
-
 clock = pygame.time.Clock()
 
 ball_img = pygame.image.load('ball.png')
 paddle1_img = pygame.image.load('paddle.png')
 paddle2_img = pygame.image.load('paddle.png')
-
 gameDisplay = pygame.display.set_mode((window_width,window_height), HWSURFACE | DOUBLEBUF | RESIZABLE)
 
-def paddle1(paddleP_x,paddleP_y):
-        gameDisplay.blit(paddle1_img,(paddleP_x,paddleP_y))
-def paddle2(paddleC_x,paddleC_y):
-        gameDisplay.blit(paddle2_img,(paddleC_x,paddleC_y))
-def ball(ball_x,ball_y):
-        gameDisplay.blit(ball_img, (ball_x,ball_y))
+def paddle1(paddleP_x, paddleP_y):
+        gameDisplay.blit(paddle1_img,(paddleP_x, paddleP_y))
 
+def paddle2(paddleC_x, paddleC_y):
+        gameDisplay.blit(paddle2_img,(paddleC_x, paddleC_y))
+
+def ball(ball_x, ball_y):
+        gameDisplay.blit(ball_img, (ball_x, ball_y))
 
 paddleC_x = window_width - 10 - paddleC_w
 paddleP_x = 10
@@ -128,16 +125,15 @@ def angleCalc(paddle_y, ball_y):
         y =  5* ( (ball_y - (paddle_y + (paddleC_h / 2 ))) / paddleC_h*.5 )
         return y
 
-
 gameExit = False
 
-state_size=8
-action_size=3
+state_size = 8
+action_size = 3
 agent = DQNAgent(state_size, action_size)
 batch_size = 32
 EPISODES = 10
 
-REWARD=0
+REWARD = 0
 # move up, stop, move down
 ACTIONS=np.array([0,0,0])
 # player y
@@ -149,7 +145,6 @@ ACTIONS=np.array([0,0,0])
 # change in ball x
 # change in ball y
 FEATURES=np.array([0,0,0,0,0,0,0,0])
-
 
 myFile = open('mining.csv', 'a+')
 
@@ -231,8 +226,8 @@ while not gameExit:
         ball_x += ball_xspeed
         pygame.display.update()
         gameDisplay.fill(black)
-        paddle1(paddleP_x,paddleP_y)
-        paddle2(paddleC_x,paddleC_y)
+        paddle1(paddleP_x, paddleP_y)
+        paddle2(paddleC_x, paddleC_y)
         #END Ball Movement
 
 
@@ -245,7 +240,7 @@ while not gameExit:
                     ball_xspeed *= -1
                     angle = angleCalc(paddleP_y, ball_y)
                     ball_yspeed = ball_xspeed * math.sin(angle)*2
-                    cpuTreat = 1
+                    playerTreat = 1
         #CPU paddle
         if ball_x + ball_xspeed <= paddleC_x + paddleC_w - 1 and ball_x + ball_w - 1 + ball_xspeed >= paddleC_x:
                 if ball_y + ball_yspeed <= paddleC_y + paddleC_h - 1 and ball_y + ball_h - 1 + ball_yspeed >= paddleC_y:
@@ -254,6 +249,8 @@ while not gameExit:
                     angle = angleCalc(paddleC_y, ball_y)
                     ball_yspeed = ball_xspeed * math.sin(angle) *-2
                     cpuTreat = 1
+
+        ## NOTE: this can go
 
         # player_hit = 1
         #
@@ -271,10 +268,8 @@ while not gameExit:
 
         #If Player Loses
         if (ball_x<0):
-                # reset
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
-                #ball_xspeed *=
                 ball_yspeed = random.uniform(-3,3)
                 cpuScore += 1
                 computer_scored = 1
@@ -283,22 +278,19 @@ while not gameExit:
 
                 state = np.reshape(state, [1, state_size])
 
-        #If CPU Loses
+        #If AI Loses
         if (ball_x>window_width):
                 ball_x = 0.5 * window_width
                 ball_y = (0.5 * (window_height-ScoreBarHeight))+ScoreBarHeight
-                #ball_xspeed = -1
                 ball_yspeed = random.uniform(-3,3)
                 playerScore += 1
                 cpuTreat = -2
 
-
-                cpuTreat = -2
         #When Score reaches 20
-        if playerScore == 20 or cpuScore == 20:
+        if (playerScore == 20 or cpuScore == 20) and not TRAINING:
                 pygame.quit()
                 sys.exit()
-                
+
         #END Ball Out of Bounds
                 player_scored = 1
                 state = np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
@@ -318,7 +310,7 @@ while not gameExit:
                 ball_yspeed = -1* ball_yspeed
         else:
                 ball_y += ball_yspeed
-        ball(ball_x,ball_y)
+        ball(ball_x, ball_y)
         #END Ball Vertical Limit
 
 
@@ -328,9 +320,6 @@ while not gameExit:
         gameDisplay.blit(cpuScoreDisplay, (window_width*3/4, ScoreBarHeight/2 - 10))
         gameDisplay.blit(playerScoreDisplay, (window_width/4, ScoreBarHeight/2 - 10))
         #END Update and Display Score
-
-        #SOMEONE PLEASE CHECK THE FOLLWOING LINE FOR MEMORY LEAK
-        myarray.append(pygame.surfarray.pixels2d(gameDisplay.copy()))
 
         clock.tick(60)
 
@@ -351,7 +340,6 @@ while not gameExit:
             writer = csv.writer(myFile)
             writer.writerows([{paddleP_y,paddleP_change, paddleC_y, paddleC_change,
                                    ball_x, ball_y, ball_xspeed,  ball_yspeed, reward}])
-
 
 if gameExit:
     model.save('saved_model.h5')
