@@ -164,7 +164,7 @@ while not gameExit:
                 playerScore += 1
                 cpuTreat = -2
         #When Score reaches 20
-        if playerScore == 999 or cpuScore == 999:
+        if playerScore == 20 or cpuScore == 20:
                 pygame.quit()
                 sys.exit()
         #END Ball Out of Bounds
