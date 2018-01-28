@@ -127,7 +127,7 @@ def angleCalc(paddle_y, ball_y):
 
 gameExit = False
 
-state_size = (100, 100)
+state_size = (166, 157) # or state.shape()
 action_size = 3
 agent = DQNAgent(state_size, action_size)
 batch_size = 32
@@ -171,7 +171,7 @@ while not gameExit:
 
         # state = np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
         #                            ball_x, ball_y, ball_xspeed,  ball_yspeed])
-        state = pygame.surfarray.pixels2d(gameDisplay.copy())[10:491:3, 30::3, :]#.ravel()
+        state = pygame.surfarray.pixels2d(gameDisplay.copy())[::5, 30::5, :]
         action = agent.act(state)
 
         if action == 0:
@@ -187,8 +187,9 @@ while not gameExit:
 
         # next_state, reward, done = (np.array([paddleP_y,paddleP_change, paddleC_y, paddleC_change,
         #                            ball_x, ball_y, ball_xspeed,  ball_yspeed]), REWARD, done)
-        next_state, reward, done = pygame.surfarray.pixels2d(gameDisplay.copy())[10:491:3, 30::3, :]
+        next_state = pygame.surfarray.pixels2d(gameDisplay.copy())[2::3, 29::3, :]
         next_state = np.reshape(next_state, [1, state_size])
+
         agent.remember(state, action, reward, next_state, done)
         state = next_state
 
