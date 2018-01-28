@@ -18,7 +18,7 @@ class DQNAgent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size
         self.action_size = action_size
-        self.memory = deque(maxlen=2000)
+        self.memory = deque(maxlen=256000)
         self.gamma = 0.95    # discount rate
         self.epsilon = 1.0  # exploration rate
         self.epsilon_min = 0.01
@@ -130,7 +130,7 @@ gameExit = False
 state_size = 8
 action_size = 3
 agent = DQNAgent(state_size, action_size)
-batch_size = 32
+batch_size = 8192
 EPISODES = 10
 
 REWARD = 0
